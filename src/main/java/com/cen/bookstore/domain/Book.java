@@ -21,6 +21,8 @@ public class Book {
     private int year;
     private boolean sold;
 
+    private int copiesSold;
+
 
 
         public Book(long isbn,
@@ -32,7 +34,8 @@ public class Book {
                 double price,
                 String publisher,
                 int year,
-                boolean sold) {
+                boolean sold,
+                    int copiesSold) {
 
         this.isbn = isbn;
         this.title = title;
@@ -44,6 +47,7 @@ public class Book {
         this.publisher = publisher;
         this.year = year;
         this.sold = sold;
+        this.copiesSold = copiesSold;
 
 
     }

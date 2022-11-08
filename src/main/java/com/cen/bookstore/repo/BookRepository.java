@@ -16,6 +16,8 @@ public interface BookRepository extends MongoRepository<Book, String> {
     //Access DB to find book with input isbn
     List<Book> findByIsbn(long isbn);
 
+    List<Book> findBygenre(String genre);
+
 
 
 }
