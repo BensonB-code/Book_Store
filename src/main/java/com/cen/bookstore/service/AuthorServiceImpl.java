@@ -30,4 +30,9 @@ public class AuthorServiceImpl implements AuthorService {
     public List<Author> getAuthorByName(String firstname) {
         return repository.findAuthorByFirstName(firstname);
     }
+
+    @Override
+    public List<Author> getAuthorByLastName(String lastName) {
+        return repository.findAuthorByLastName(lastName);
+    }
 }
