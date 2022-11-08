@@ -5,7 +5,7 @@
 <ol><b>
 <li>Spring Boot (REST API)</li>
 <li>Spring Security & JWT </li>
-<li>MYSQL(via MAMP)</li>
+<li>POSTMAN(via MAMP)</li>
 <li>Payment API (Stripe)</li>
 </b></ol>
 
