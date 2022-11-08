@@ -23,8 +23,6 @@ public class BookController {
     public String saveBook(@RequestBody Book book){
         return bookService.save(book);
     }
-    //saves the book
-
 
     //Retrieves All Book by author
     //GET http://localhost:8080/book/<author>

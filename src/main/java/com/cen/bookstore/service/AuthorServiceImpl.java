@@ -19,15 +19,20 @@ public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private AuthorRepository repository;
 
-
+    //Method to save author into database
     @Override
     public String save(Author author) {
         repository.save(author);
-        return "Added author named: " + author.getFirstName();
+        return "Added author named: " + author.getFirstName(); //prints the name of the author added to database
     }
 
     @Override
     public List<Author> getAuthorByName(String firstname) {
         return repository.findAuthorByFirstName(firstname);
+    }
+
+    @Override
+    public List<Author> getAuthorByLastName(String lastName) {
+        return repository.findAuthorByFirstName(lastName);
     }
 }

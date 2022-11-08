@@ -31,4 +31,11 @@ public class AuthorController {
         return authorService.getAuthorByName(firstName);
     }
 
+    //Allows retrieving Author by firstName
+    //GET http://localhost:8080/author/findAuthor/lastName/<lastName>
+    @GetMapping("/findAuthor/lastName/{lastName}")
+    public List<Author> getAuthorByLastName(@PathVariable("lastName")String lastName){
+        return authorService.getAuthorByLastName(lastName);
+    }
+
 }

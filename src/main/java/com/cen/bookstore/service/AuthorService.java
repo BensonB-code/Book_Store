@@ -10,4 +10,6 @@ public interface AuthorService {
 
     //Service that get Book by isbn
     List<Author> getAuthorByName(String firstName);
+
+    List<Author> getAuthorByLastName(String lastName);
 }
