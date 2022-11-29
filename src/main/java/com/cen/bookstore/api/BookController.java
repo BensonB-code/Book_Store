@@ -60,6 +60,12 @@ public class BookController {
         return bookService.getBookPage(p);
     }
 
+    @GetMapping("/rating")
+    public List<Book> getByRating(@RequestParam Integer minRating, @RequestParam Integer maxRating){
+        return bookService.getByRating(minRating, maxRating);
+
+    }
+
 
 
 }

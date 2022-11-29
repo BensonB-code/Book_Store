@@ -1,7 +1,9 @@
 package com.cen.bookstore.repo;
 
 import com.cen.bookstore.domain.Book;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,6 +19,8 @@ public interface BookRepository extends MongoRepository<Book, String> {
     List<Book> findByIsbn(long isbn);
 
     List<Book> findBygenre(String genre);
+    @Query(value = "{'rating' : { $gte : ?0, $lte : ?1}}")
+    List<Book> findByRatingBetween(Integer min, Integer max);
 
 
 
