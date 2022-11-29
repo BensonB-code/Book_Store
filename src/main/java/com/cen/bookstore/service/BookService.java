@@ -20,4 +20,6 @@ public interface BookService {
     List<Book> getBookWithSorting(String field);
 
     Page<Book> getBookPage(org.springframework.data.domain.Pageable p);
+
+    List<Book> getByRating(Integer minRating, Integer maxRating);
 }

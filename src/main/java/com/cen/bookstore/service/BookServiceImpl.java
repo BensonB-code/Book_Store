@@ -41,7 +41,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getBookWithSorting(String field) {
-        return repository.findAll(Sort.by(Sort.Direction.ASC,field));
+        return repository.findAll(Sort.by(Sort.Direction.DESC,field));
     }
 
     @Override
@@ -49,6 +49,10 @@ public class BookServiceImpl implements BookService {
         return repository.findAll(p);
     }
 
+    @Override
+    public List<Book> getByRating(Integer minRating, Integer maxRating) {
+        return repository.findByRatingBetween(minRating,maxRating);
+    }
 
 
 }
