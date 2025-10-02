@@ -1,29 +1,49 @@
-version: "3.8"
 services:
   mongodb:
-    image: mongo
-    container_name: mongo
+    image: mongo:7
     ports:
-      - 27017:27017
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: bookstore
+      MONGO_INITDB_ROOT_USERNAME: rootuser
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
     volumes:
-      - data:/data
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=rootuser
-      - MONGO_INITDB_ROOT_PASSWORD=rootpass
+      - mongo_data:/data/db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet --eval 'db.runCommand({ ping: 1 })' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    restart: always
+    image: mongo-express:1.0.2
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
-      - ME_CONFIG_MONGODB_SERVER=mongodb
+      # IMPORTANT: use the SERVICE NAME "mongodb" and include authSource=admin for root creds
+      ME_CONFIG_MONGODB_URL: mongodb://rootuser:rootpass@mongodb:27017/?authSource=admin
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: change-me
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: unless-stopped
+
+  app:
+    # Builds your Spring Boot API from the Dockerfile in this repo
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      # Spring Boot connection string to the Mongo service
+      SPRING_DATA_MONGODB_URI: mongodb://rootuser:rootpass@mongodb:27017/bookstore?authSource=admin
+      # Add any other env you use (profiles, etc):
+      # SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: unless-stopped
+
 volumes:
-  data: {}
-
-networks:
-  default:
-    name: mongodb_network
-
+  mongo_data:
