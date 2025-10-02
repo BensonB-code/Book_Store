@@ -2,7 +2,7 @@ version: "3.8"
 services:
   mongodb:
     image: mongo
-    container_name: mongodb
+    container_name: mongo
     ports:
       - 27017:27017
     volumes:
@@ -26,3 +26,4 @@ volumes:
 networks:
   default:
     name: mongodb_network
+
