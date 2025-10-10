@@ -10,10 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@RestController
-@AllArgsConstructor
-@RequestMapping("/book")
+//Combines @Controller + @ResponseBody. It tells Spring: “This class handles HTTP requests and its return values should be serialized directly into JSON.”
+@RestController //Combines @Controller + @ResponseBody. It tells Spring: “This class handles HTTP requests and its return values should be serialized directly into JSON.”
+@AllArgsConstructor //Automatically create constructor for the BookController class
+@RequestMapping("/book")   //Base URL path for every endpoint in this controller. All routes start with /book/...
 public class BookController {
 
     @Autowired
@@ -27,10 +27,12 @@ public class BookController {
         return bookService.save(book);
     }
     //saves the book
+    // @RequestBody Book book → Spring automatically converts incoming JSON into a Book object.
 
 
     //Retrieves All Book by author
     //GET http://localhost:8080/book/<author>
+    //@PathVariable("author") retrieves author from URL (from the get request) and saves it into author parameter or argument
     @GetMapping("/{author}")
     public List<Book> getBookByAuthor(@PathVariable("author") String author){
         return bookService.getBookByAuthor(author);
