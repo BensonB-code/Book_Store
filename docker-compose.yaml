@@ -21,25 +21,9 @@ services:
     ports:
       - "8081:8081"
     environment:
-      # IMPORTANT: use the SERVICE NAME "mongodb" and include authSource=admin for root creds
       ME_CONFIG_MONGODB_URL: mongodb://rootuser:rootpass@mongodb:27017/?authSource=admin
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: change-me
-    depends_on:
-      mongodb:
-        condition: service_healthy
-    restart: unless-stopped
-
-  app:
-    # Builds your Spring Boot API from the Dockerfile in this repo
-    build: .
-    ports:
-      - "8080:8080"
-    environment:
-      # Spring Boot connection string to the Mongo service
-      SPRING_DATA_MONGODB_URI: mongodb://rootuser:rootpass@mongodb:27017/bookstore?authSource=admin
-      # Add any other env you use (profiles, etc):
-      # SPRING_PROFILES_ACTIVE: prod
     depends_on:
       mongodb:
         condition: service_healthy
