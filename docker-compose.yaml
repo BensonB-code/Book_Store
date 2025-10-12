@@ -1,4 +1,19 @@
 services:
+  api:
+    build: .                       # builds from your Dockerfile in the repo root
+    container_name: bookstore-api
+    ports:
+      - "8080:8080"
+    environment:
+      # IMPORTANT: include user/pass and point to the 'bookstore' DB; auth happens against 'admin'
+      SPRING_DATA_MONGODB_URI: mongodb://rootuser:rootpass@mongodb:27017/bookstore?authSource=admin
+      # (Optional) Spring profile or JVM flags:
+      # SPRING_PROFILES_ACTIVE: docker
+      # JAVA_OPTS: -XX:MaxRAMPercentage=75.0
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: unless-stopped
   mongodb:
     image: mongo:7
     ports:
@@ -22,8 +37,6 @@ services:
       - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_URL: mongodb://rootuser:rootpass@mongodb:27017/?authSource=admin
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: change-me
     depends_on:
       mongodb:
         condition: service_healthy
